@@ -102,6 +102,13 @@
 <script>
   let score = 0
   let currentquestion = 1; 
+  const correctAnswers = {
+    q1: "Это память процессора",
+    q2: "GDDR6X GDDR5",
+    q3: "Это устройство хранения данных",
+    q4: "Это устройство которое временно хранит память",
+    q5: "Это устройство которое отвечает за питание устройств компьютера"
+};
   // ЭТО ДЛЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
   const startScreen = document.getElementById('startScreen');
   const quizContainer = document.getElementById('quiz-container');
@@ -111,29 +118,70 @@
     startScreen.style.display = 'none'; // строчка для того чтобы убрать приветствие
     quizContainer.style.display = 'block';
   });
-    function checkQuiz() {
-let currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
-    
-    if (currentInput && currentInput.value === "correct") {
-        score++;
-    }
-currentquestion++;
-      document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
-      if (currentquestion <= 5) {
-         document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
-        document.getElementById(`question${currentquestion}`).style.display = 'block';
-    } else {
-         document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
-        // Скрываем кнопку
-        document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
-    }
-    
-    // Очищаем обратную связь (если была)
+  function showFeedback(isCorrect, correctAnswer) {
     const feedbackDiv = document.getElementById('feedback');
-    if (feedbackDiv) {
-        feedbackDiv.innerHTML = '';
+    if (isCorrect) {
+        feedbackDiv.innerHTML = '✅ Правильно! Молодец!';
+        feedbackDiv.style.color = 'green';
+        feedbackDiv.style.backgroundColor = '#d4edda';
+        feedbackDiv.style.padding = '10px';
+        feedbackDiv.style.borderRadius = '5px';
+        feedbackDiv.style.marginTop = '10px';
+    } else {
+        feedbackDiv.innerHTML = `❌ Неправильно! Правильный ответ: "${correctAnswer}"`;
+        feedbackDiv.style.color = 'red';
+        feedbackDiv.style.backgroundColor = '#f8d7da';
+        feedbackDiv.style.padding = '10px';
+        feedbackDiv.style.borderRadius = '5px';
+        feedbackDiv.style.marginTop = '10px';
     }
 }
-</script>
+function checkQuiz() {
+    let currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
+    
+    if (currentInput) {
+        const isCorrect = (currentInput.value === "correct");
+        const correctAnswerText = correctAnswers[`q${currentquestion}`];
+        
+        // Показываем обратную связь
+        showFeedback(isCorrect, correctAnswerText);
+        
+        // Если ответ правильный, добавляем балл
+        if (isCorrect) {
+            score++;
+        }
+        
+        // Задержка перед переходом к следующему вопросу (чтобы пользователь увидел сообщение)
+        setTimeout(function() {
+            currentquestion++;
+            
+            if (currentquestion <= 5) {
+                document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
+                document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
+                document.getElementById(`question${currentquestion}`).style.display = 'block';
+                // Очищаем обратную связь
+                const feedbackDiv = document.getElementById('feedback');
+                if (feedbackDiv) {
+                    feedbackDiv.innerHTML = '';
+                }
+            } else {
+                document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
+                document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
+                const feedbackDiv = document.getElementById('feedback');
+                if (feedbackDiv) {
+                    feedbackDiv.innerHTML = '';
+                }
+            }
+        }, 1500);
+    } else {
+        // Если пользователь ничего не выбрал
+        const feedbackDiv = document.getElementById('feedback');
+        feedbackDiv.innerHTML = '⚠️ Пожалуйста, выбери ответ!';
+        feedbackDiv.style.color = 'orange';
+        feedbackDiv.style.backgroundColor = '#fff3cd';
+        feedbackDiv.style.padding = '10px';
+        feedbackDiv.style.borderRadius = '5px';
+    }
+}
 </body>
 </html>
