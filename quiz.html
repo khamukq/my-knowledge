@@ -1,344 +1,379 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8">
     <style>
-    body {
-        background-color: #1a1a1a;  
-        color: #ffffff;              
-        font-family: Arial, sans-serif;
-        padding: 20px;
-       text-align: center;
-    }
-    
-    .question {
-        background-color: #ffffff;   
-        color: #000000;              
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-      text-align: left;
-    }
-    
-    button {
-        background-color: #007bff;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    .result {
-        background-color: #ffffff;
-        color: #000000;
-        padding: 15px;
-        border-radius: 10px;
-        margin-top: 20px; }
-    
-    #startScreen {
-        text-align: center;
-    }
-    
-    #startScreen img {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    #start-btn {
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 20px;
-    }
-     .question img {
-    max-width: 100%;
-    height: auto;
-    max-height: 300px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 15px;
-    border-radius: 10px;
-}
-      #startScreen h2 {
-    font-size: 32px;
-}
-
-#startScreen p {
-    font-size: 20px;
-}
-
-#startScreen img {
-    width: 80%;
-    max-width: 500px;
-    margin-bottom: 20px;
-}
-
-#start-btn {
-    font-size: 18px;
-    padding: 12px 30px;
-}
-
-/* Увеличиваем текст вопросов */
-.question p {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-.question label {
-    font-size: 16px;
-    line-height: 1.5;
-}
-      /* Плавное появление вопросов */
-.question {
-    transition: all 0.3s ease;
-}
-
-/* Анимация для кнопки при наведении */
-button {
-    transition: all 0.2s ease;
-}
-
-button:hover {
-    background-color: #0056b3;
-    transform: scale(1.02);
-}
-
-/* Анимация для карточек при наведении */
-.question:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-}
-
-/* Плавное появление обратной связи */
-#feedback {
-    transition: all 0.3s ease;
-}
-
-/* Анимация для стартовой картинки */
-#startScreen img {
-    transition: transform 0.3s ease;
-}
-
-#startScreen img:hover {
-    transform: scale(1.02);
-}
-
-/* Плавное появление контейнера */
-#quiz-container {
-    transition: opacity 0.5s ease;
-}
-          .question label {
-        font-size: 16px;
-        line-height: 1.5;
-    }
-    
-    /* 👇 СЮДА ВСТАВЬ НОВЫЕ АНИМАЦИИ */
-    
-/* Анимация при загрузке вопросов */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.question {
-    animation: fadeIn 0.4s ease;
-}
-</style>
-    <title> Викторина основанная на железе компа </title>
-  </head>
-  <body>
-    <button id="restart-btn" onclick="restartQuiz()" style="display: none; margin-top: 20px;">🔄 Пройти заново</button>
-    <div id = "startScreen">
-    <h2> Проверь же свой мегамозг на знания</h2>
-      <p> Всего 5 легких вопросов </p>
-      <img src="https://avatars.mds.yandex.net/i?id=f04492fc8a89509999d2a541b8621413_l-4012518-images-thumbs&n=13" alt="Компьютер" width="300" style="margin-bottom: 15px;">
-      <button id="start-btn">Начать викторину</button>
-    </div>
-    <div id="quiz-container" style="display: none;">
-          <h1> Тест: мои знания в компах </h1>
-      <p id="question-counter" style="font-size: 18px; margin-bottom: 20px;"> Вопрос 1 из 5</p>
-<div id="question1" class="question">
-  
-  <p>1. Что такое <strong>кэш</strong> в процессоре </p>
-<img src="orig.webp" alt="Процессор" style="border-radius: 10px; margin-bottom: 15px;">
-  <label><input type="radio" name="q1" value="wrong2" > Это ядра процессора </label><br>
-  <label><input type="radio" name="q1" value="correct" > Это память процессора </label><br>
-  <label><input type="radio" name="q1" value="wrong1">  Это потоки процессора </label><br>
-</div>
-      
-  <div id="question2" class="question" style="display: none;">
-  <p>2. Какие виды <strong>видеопамяти</strong> в видеокарте </p>
-    <img src="orig (1).webp" alt="Процессор" style="border-radius: 10px; margin-bottom: 15px;">
-  <label><input type="radio" name="q2" value="wrong2" > DDR2 DDR </label><br>
-  <label><input type="radio" name="q2" value="correct" > GDDR6X GDDR5 </label><br>
-  <label><input type="radio" name="q2" value="wrong1">  У видеокарты нет видеопамяти </label>
-</div>
-      
-    <div id="question3" class="question" style="display: none;">
-  <p>3. Что такое <strong>SSD</strong> в компьютере </p>
-      <img src="i.webp" alt="Процессор" style="border-radius: 10px; margin-bottom: 15px;">
-  <label><input type="radio" name="q3" value="correct" > Это устройство хранения данных </label><br>
-  <label><input type="radio" name="q3" value="wrong2" > Это устройство выводящее видеокартинку </label><br>
-  <label><input type="radio" name="q3" value="wrong1">  Это устройство которое отвечает за подсветку </label>
-  <label><input type="radio" name="q3" value="wrong3">  Это устройство которое отвечает за локальные сети </label>
-</div>
-      
-     <div id="question4" class="question" style="display: none;">
-  <p>4. Что такое <strong>ОЗУ</strong> в компьютере </p>
-       <img src="orig (2).webp" alt="Процессор" style="border-radius: 10px; margin-bottom: 15px;">
-  <label><input type="radio" name="q4" value="correct" > Это устройство которое временно хранит память </label><br>
-  <label><input type="radio" name="q4" value="wrong2" > Это устройство что регулирует скорость кулеров </label><br>
-  <label><input type="radio" name="q4" value="wrong1">  Это устройство которое отвечает за питание компьютера </label>
-</div>
-      
-     <div id="question5" class="question" style="display: none;">
-  <p>5. Что такое <strong>БП</strong> в компьютере </p>
-       <img src="orig (3).webp" alt="Процессор" style="border-radius: 10px; margin-bottom: 15px;">
-  <label><input type="radio" name="q5" value="wrong2" > Это устройство которое выводит звук </label><br>
-  <label><input type="radio" name="q5" value="wrong1" > Это устройство выводящее видеокартинку </label><br>
-  <label><input type="radio" name="q5" value="correct">  Это устройство которое отвечает за питание устройств компьютера </label>
-</div>
-      
-      <div id="feedback" style="margin-top: 15px;"></div>
-    <button onclick="checkQuiz()">Узнать результат</button>
-<div class="result" id="result"></div>
-<script>
-  let score = 0
-  let currentquestion = 1; 
-  const correctAnswers = {
-    q1: "Это память процессора",
-    q2: "GDDR6X GDDR5",
-    q3: "Это устройство хранения данных",
-    q4: "Это устройство которое временно хранит память",
-    q5: "Это устройство которое отвечает за питание устройств компьютера"
-};
-  // ЭТО ДЛЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
-  const startScreen = document.getElementById('startScreen');
-  const quizContainer = document.getElementById('quiz-container');
-  const startBtn = document.getElementById('start-btn');
-  //ДАЛЕЕ ЕСЛИ НАЖИМАЕМ НА КНОПКУ 
-  startBtn.addEventListener('click',function() {
-    startScreen.style.display = 'none'; // строчка для того чтобы убрать приветствие
-    quizContainer.style.display = 'block';
-  });
-  function showFeedback(isCorrect, correctAnswer) {
-    const feedbackDiv = document.getElementById('feedback');
-    if (isCorrect) {
-        feedbackDiv.innerHTML = '✅ Правильно! Молодец!';
-        feedbackDiv.style.color = 'green';
-        feedbackDiv.style.backgroundColor = '#d4edda';
-        feedbackDiv.style.padding = '10px';
-        feedbackDiv.style.borderRadius = '5px';
-        feedbackDiv.style.marginTop = '10px';
-    } else {
-        feedbackDiv.innerHTML = `❌ Неправильно! Правильный ответ: "${correctAnswer}"`;
-        feedbackDiv.style.color = 'red';
-        feedbackDiv.style.backgroundColor = '#f8d7da';
-        feedbackDiv.style.padding = '10px';
-        feedbackDiv.style.borderRadius = '5px';
-        feedbackDiv.style.marginTop = '10px';
-    }
-}
-function checkQuiz() {
-    // Блокируем кнопку, чтобы нельзя было нажать повторно
-    const quizButton = document.querySelector('button[onclick="checkQuiz()"]');
-    quizButton.disabled = true;
-    quizButton.style.opacity = '0.5';
-    
-    let currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
-    
-    if (currentInput) {
-        const isCorrect = (currentInput.value === "correct");
-        const correctAnswerText = correctAnswers[`q${currentquestion}`];
-        
-        showFeedback(isCorrect, correctAnswerText);
-        
-        if (isCorrect) {
-            score++;
+        body {
+            background-color: #1a1a1a;  
+            color: #ffffff;              
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
         }
         
+        .question {
+            background-color: #ffffff;   
+            color: #000000;              
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            text-align: left;
+            transition: all 0.3s ease;
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.02);
+        }
+        
+        .result {
+            background-color: #ffffff;
+            color: #000000;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        #startScreen {
+            text-align: center;
+        }
+        
+        #start-btn {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 20px;
+        }
+        
+        .question img {
+            max-width: 100%;
+            height: auto;
+            max-height: 300px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 15px;
+            border-radius: 10px;
+        }
+        
+        #startScreen h2 {
+            font-size: 32px;
+        }
+        
+        #startScreen p {
+            font-size: 20px;
+        }
+        
+        #startScreen img {
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        #startScreen img:hover {
+            transform: scale(1.02);
+        }
+        
+        #start-btn {
+            font-size: 18px;
+            padding: 12px 30px;
+        }
+        
+        .question p {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .question label {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        #feedback {
+            transition: all 0.3s ease;
+        }
+        
+        #quiz-container {
+            transition: opacity 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        #timer {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff5722;
+            background-color: #333;
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 50px;
+            margin-bottom: 15px;
+        }
+    </style>
+    <title>Викторина о железе компьютера</title>
+</head>
+<body>
+
+<div id="startScreen">
+    <h2>🧠 Проверь же свой мегамозг на знания</h2>
+    <p>📚 Всего 5 вопросов</p>
+    <img src="https://avatars.mds.yandex.net/i?id=f04492fc8a89509999d2a541b8621413_l-4012518-images-thumbs&n=13" alt="Компьютер">
+    <button id="start-btn">🚀 Начать викторину</button>
+</div>
+
+<div id="quiz-container" style="display: none;">
+    <h1>🔥 Тест: мои знания в компах</h1>
+    <p id="question-counter" style="font-size: 18px; margin-bottom: 10px;">Вопрос 1 из 5</p>
+    <p id="timer">⏱️ 10</p>
+    
+    <div id="question1" class="question">
+        <p>1️⃣ Что такое <strong>кэш</strong> в процессоре?</p>
+        <img src="orig.webp" alt="Процессор">
+        <label><input type="radio" name="q1" value="wrong1"> Это ядра процессора</label><br>
+        <label><input type="radio" name="q1" value="correct"> Это быстрая память процессора</label><br>
+        <label><input type="radio" name="q1" value="wrong2"> Это потоки процессора</label><br>
+    </div>
+    
+    <div id="question2" class="question" style="display: none;">
+        <p>2️⃣ Какие виды <strong>видеопамяти</strong> бывают в видеокарте?</p>
+        <img src="orig (1).webp" alt="Видеокарта">
+        <label><input type="radio" name="q2" value="wrong1"> DDR2 / DDR</label><br>
+        <label><input type="radio" name="q2" value="correct"> GDDR6 / GDDR5</label><br>
+        <label><input type="radio" name="q2" value="wrong2"> У видеокарты нет памяти</label>
+    </div>
+    
+    <div id="question3" class="question" style="display: none;">
+        <p>3️⃣ Что такое <strong>SSD</strong> в компьютере?</p>
+        <img src="i.webp" alt="SSD">
+        <label><input type="radio" name="q3" value="correct"> Устройство для быстрого хранения данных</label><br>
+        <label><input type="radio" name="q3" value="wrong1"> Устройство для вывода картинки</label><br>
+        <label><input type="radio" name="q3" value="wrong2"> Отвечает за подсветку</label><br>
+        <label><input type="radio" name="q3" value="wrong3"> Отвечает за локальные сети</label>
+    </div>
+    
+    <div id="question4" class="question" style="display: none;">
+        <p>4️⃣ Что такое <strong>ОЗУ</strong> в компьютере?</p>
+        <img src="orig (2).webp" alt="Оперативная память">
+        <label><input type="radio" name="q4" value="correct"> Временно хранит данные для процессора</label><br>
+        <label><input type="radio" name="q4" value="wrong1"> Регулирует скорость кулеров</label><br>
+        <label><input type="radio" name="q4" value="wrong2"> Отвечает за питание ПК</label>
+    </div>
+    
+    <div id="question5" class="question" style="display: none;">
+        <p>5️⃣ Что такое <strong>БП</strong> в компьютере?</p>
+        <img src="orig (3).webp" alt="Блок питания">
+        <label><input type="radio" name="q5" value="wrong1"> Выводит звук</label><br>
+        <label><input type="radio" name="q5" value="wrong2"> Выводит картинку</label><br>
+        <label><input type="radio" name="q5" value="correct"> Отвечает за питание всех устройств</label>
+    </div>
+    
+    <div id="feedback" style="margin-top: 15px;"></div>
+    <button onclick="checkQuiz()">🎯 Узнать результат</button>
+    <div class="result" id="result"></div>
+    <button id="restart-btn" onclick="restartQuiz()" style="display: none; margin-top: 20px;">🔄 Пройти заново</button>
+</div>
+
+<script>
+    let score = 0;
+    let currentquestion = 1;
+    let timerInterval = null;
+    let timeLeft = 10;
+    
+    const correctAnswers = {
+        q1: "correct",
+        q2: "correct",
+        q3: "correct",
+        q4: "correct",
+        q5: "correct"
+    };
+    
+    const startScreen = document.getElementById('startScreen');
+    const quizContainer = document.getElementById('quiz-container');
+    const startBtn = document.getElementById('start-btn');
+    
+    startBtn.addEventListener('click', function() {
+        startScreen.style.display = 'none';
+        quizContainer.style.display = 'block';
+        startTimer();
+    });
+    
+    function showFeedback(isCorrect, correctAnswer) {
+        const feedbackDiv = document.getElementById('feedback');
+        if (isCorrect) {
+            feedbackDiv.innerHTML = '✅ Правильно! Молодец!';
+            feedbackDiv.style.color = 'green';
+            feedbackDiv.style.backgroundColor = '#d4edda';
+            feedbackDiv.style.padding = '10px';
+            feedbackDiv.style.borderRadius = '5px';
+            feedbackDiv.style.marginTop = '10px';
+        } else {
+            feedbackDiv.innerHTML = `❌ Неправильно! Правильный ответ: "${correctAnswer}"`;
+            feedbackDiv.style.color = 'red';
+            feedbackDiv.style.backgroundColor = '#f8d7da';
+            feedbackDiv.style.padding = '10px';
+            feedbackDiv.style.borderRadius = '5px';
+            feedbackDiv.style.marginTop = '10px';
+        }
+    }
+    
+    function startTimer() {
+        if (timerInterval) clearInterval(timerInterval);
+        timeLeft = 10;
+        document.getElementById('timer').innerHTML = `⏱️ ${timeLeft}`;
+        
+        timerInterval = setInterval(function() {
+            timeLeft--;
+            document.getElementById('timer').innerHTML = `⏱️ ${timeLeft}`;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                autoNextQuestion();
+            }
+        }, 1000);
+    }
+    
+    function stopTimer() {
+        if (timerInterval) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+        }
+    }
+    
+    function autoNextQuestion() {
+        const feedbackDiv = document.getElementById('feedback');
+        feedbackDiv.innerHTML = '⏰ Время вышло! Переходим к следующему вопросу...';
+        feedbackDiv.style.color = 'orange';
+        feedbackDiv.style.backgroundColor = '#fff3cd';
+        feedbackDiv.style.padding = '10px';
+        feedbackDiv.style.borderRadius = '5px';
+        
+        const quizButton = document.querySelector('button[onclick="checkQuiz()"]');
+        quizButton.disabled = true;
+        quizButton.style.opacity = '0.5';
+        
         setTimeout(function() {
+            stopTimer();
             currentquestion++;
             
             if (currentquestion <= 5) {
                 document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
                 document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
                 document.getElementById(`question${currentquestion}`).style.display = 'block';
-                const feedbackDiv = document.getElementById('feedback');
-                if (feedbackDiv) {
-                    feedbackDiv.innerHTML = '';
-                }
-                // Разблокируем кнопку для следующего вопроса
+                document.getElementById('feedback').innerHTML = '';
+                startTimer();
                 quizButton.disabled = false;
                 quizButton.style.opacity = '1';
             } else {
-                document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
+                document.getElementById('result').innerHTML = `<h2>🎉 Твой результат: ${score} из 5 🎉</h2>`;
                 document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
                 document.getElementById('restart-btn').style.display = 'block';
-                const feedbackDiv = document.getElementById('feedback');
-                if (feedbackDiv) {
-                    feedbackDiv.innerHTML = '';
-                }
+                document.getElementById('feedback').innerHTML = '';
+                document.getElementById('timer').innerHTML = '';
+                stopTimer();
             }
         }, 1500);
-    } else {
-        const feedbackDiv = document.getElementById('feedback');
-        feedbackDiv.innerHTML = '⚠️ Пожалуйста, выбери ответ!';
-        feedbackDiv.style.color = 'orange';
-        feedbackDiv.style.backgroundColor = '#fff3cd';
-        feedbackDiv.style.padding = '10px';
-        feedbackDiv.style.borderRadius = '5px';
-        // Разблокируем кнопку, чтобы можно было выбрать ответ и нажать снова
-        quizButton.disabled = false;
-        quizButton.style.opacity = '1';
     }
-}
-  function restartQuiz() {
-    // Сбрасываем переменные
-    score = 0;
-    currentquestion = 1;
     
-    // Показываем первый вопрос, скрываем остальные
-    for (let i = 1; i <= 5; i++) {
-        const questionDiv = document.getElementById(`question${i}`);
-        if (questionDiv) {
-            if (i === 1) {
-                questionDiv.style.display = 'block';
-            } else {
-                questionDiv.style.display = 'none';
+    function checkQuiz() {
+        stopTimer();
+        const quizButton = document.querySelector('button[onclick="checkQuiz()"]');
+        quizButton.disabled = true;
+        quizButton.style.opacity = '0.5';
+        
+        const currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
+        
+        if (currentInput) {
+            const isCorrect = (currentInput.value === "correct");
+            const correctAnswerText = correctAnswers[`q${currentquestion}`];
+            showFeedback(isCorrect, correctAnswerText);
+            
+            if (isCorrect) {
+                score++;
             }
+            
+            setTimeout(function() {
+                currentquestion++;
+                
+                if (currentquestion <= 5) {
+                    document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
+                    document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
+                    document.getElementById(`question${currentquestion}`).style.display = 'block';
+                    document.getElementById('feedback').innerHTML = '';
+                    startTimer();
+                    quizButton.disabled = false;
+                    quizButton.style.opacity = '1';
+                } else {
+                    document.getElementById('result').innerHTML = `<h2>🎉 Твой результат: ${score} из 5 🎉</h2>`;
+                    document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
+                    document.getElementById('restart-btn').style.display = 'block';
+                    document.getElementById('feedback').innerHTML = '';
+                    document.getElementById('timer').innerHTML = '';
+                    stopTimer();
+                }
+            }, 1500);
+        } else {
+            document.getElementById('feedback').innerHTML = '⚠️ Пожалуйста, выбери ответ!';
+            document.getElementById('feedback').style.color = 'orange';
+            document.getElementById('feedback').style.backgroundColor = '#fff3cd';
+            document.getElementById('feedback').style.padding = '10px';
+            document.getElementById('feedback').style.borderRadius = '5px';
+            quizButton.disabled = false;
+            quizButton.style.opacity = '1';
+            startTimer();
         }
     }
     
-    // Сбрасываем выбранные ответы (если были выбраны)
-    for (let i = 1; i <= 5; i++) {
-        const radios = document.querySelectorAll(`input[name="q${i}"]`);
-        radios.forEach(radio => radio.checked = false);
+    function restartQuiz() {
+        score = 0;
+        currentquestion = 1;
+        stopTimer();
+        
+        for (let i = 1; i <= 5; i++) {
+            const radios = document.querySelectorAll(`input[name="q${i}"]`);
+            radios.forEach(radio => radio.checked = false);
+            const questionDiv = document.getElementById(`question${i}`);
+            if (questionDiv) {
+                questionDiv.style.display = i === 1 ? 'block' : 'none';
+            }
+        }
+        
+        document.getElementById('question-counter').innerHTML = 'Вопрос 1 из 5';
+        document.getElementById('result').innerHTML = '';
+        document.getElementById('feedback').innerHTML = '';
+        
+        document.querySelector('button[onclick="checkQuiz()"]').style.display = 'inline-block';
+        document.querySelector('button[onclick="checkQuiz()"]').disabled = false;
+        document.querySelector('button[onclick="checkQuiz()"]').style.opacity = '1';
+        document.getElementById('restart-btn').style.display = 'none';
+        
+        startTimer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
-    // Обновляем счётчик
-    document.getElementById('question-counter').innerHTML = 'Вопрос 1 из 5';
-    
-    // Очищаем результат и обратную связь
-    document.getElementById('result').innerHTML = '';
-    document.getElementById('feedback').innerHTML = '';
-    
-    // Показываем кнопку "Узнать результат" и скрываем кнопку перезапуска
-    document.querySelector('button[onclick="checkQuiz()"]').style.display = 'inline-block';
-    document.getElementById('restart-btn').style.display = 'none';
-    
-    // Скроллим наверх (чтобы пользователь увидел первый вопрос)
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-}
 </script>
 </body>
 </html>
