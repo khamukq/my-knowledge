@@ -56,6 +56,7 @@
     <title> Викторина основанная на железе компа </title>
   </head>
   <body>
+    <button id="restart-btn" onclick="restartQuiz()" style="display: none; margin-top: 20px;">🔄 Пройти заново</button>
     <div id = "startScreen">
     <h2> Проверь же свой мегамозг на знания</h2>
       <p> Всего 5 легких вопросов </p>
@@ -143,15 +144,12 @@ function checkQuiz() {
         const isCorrect = (currentInput.value === "correct");
         const correctAnswerText = correctAnswers[`q${currentquestion}`];
         
-        // Показываем обратную связь
         showFeedback(isCorrect, correctAnswerText);
         
-        // Если ответ правильный, добавляем балл
         if (isCorrect) {
             score++;
         }
         
-        // Задержка перед переходом к следующему вопросу (чтобы пользователь увидел сообщение)
         setTimeout(function() {
             currentquestion++;
             
@@ -159,7 +157,6 @@ function checkQuiz() {
                 document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
                 document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
                 document.getElementById(`question${currentquestion}`).style.display = 'block';
-                // Очищаем обратную связь
                 const feedbackDiv = document.getElementById('feedback');
                 if (feedbackDiv) {
                     feedbackDiv.innerHTML = '';
@@ -167,6 +164,7 @@ function checkQuiz() {
             } else {
                 document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
                 document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
+                document.getElementById('restart-btn').style.display = 'block';
                 const feedbackDiv = document.getElementById('feedback');
                 if (feedbackDiv) {
                     feedbackDiv.innerHTML = '';
@@ -174,7 +172,6 @@ function checkQuiz() {
             }
         }, 1500);
     } else {
-        // Если пользователь ничего не выбрал
         const feedbackDiv = document.getElementById('feedback');
         feedbackDiv.innerHTML = '⚠️ Пожалуйста, выбери ответ!';
         feedbackDiv.style.color = 'orange';
@@ -182,6 +179,43 @@ function checkQuiz() {
         feedbackDiv.style.padding = '10px';
         feedbackDiv.style.borderRadius = '5px';
     }
+}
+  function restartQuiz() {
+    // Сбрасываем переменные
+    score = 0;
+    currentquestion = 1;
+    
+    // Показываем первый вопрос, скрываем остальные
+    for (let i = 1; i <= 5; i++) {
+        const questionDiv = document.getElementById(`question${i}`);
+        if (questionDiv) {
+            if (i === 1) {
+                questionDiv.style.display = 'block';
+            } else {
+                questionDiv.style.display = 'none';
+            }
+        }
+    }
+    
+    // Сбрасываем выбранные ответы (если были выбраны)
+    for (let i = 1; i <= 5; i++) {
+        const radios = document.querySelectorAll(`input[name="q${i}"]`);
+        radios.forEach(radio => radio.checked = false);
+    }
+    
+    // Обновляем счётчик
+    document.getElementById('question-counter').innerHTML = 'Вопрос 1 из 5';
+    
+    // Очищаем результат и обратную связь
+    document.getElementById('result').innerHTML = '';
+    document.getElementById('feedback').innerHTML = '';
+    
+    // Показываем кнопку "Узнать результат" и скрываем кнопку перезапуска
+    document.querySelector('button[onclick="checkQuiz()"]').style.display = 'inline-block';
+    document.getElementById('restart-btn').style.display = 'none';
+    
+    // Скроллим наверх (чтобы пользователь увидел первый вопрос)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 </body>
