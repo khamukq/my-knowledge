@@ -64,65 +64,75 @@
     </div>
     <div id="quiz-container" style="display: none;">
           <h1> Тест: мои знания в компах </h1>
-<div class="question">
+      <p id="question-counter" style="font-size: 18px; margin-bottom: 20px;"> Вопрос 1 из 5</p>
+<div id="question1" class="question">
   <p>1. Что такое <strong>кэш</strong> в процессоре </p>
   <label><input type="radio" name="q1" value="wrong2" > Это ядра процессора </label><br>
   <label><input type="radio" name="q1" value="correct" > Это память процессора </label><br>
   <label><input type="radio" name="q1" value="wrong1">  Это потоки процессора </label><br>
 </div>
-  <div class="question">
+  <div id="question2" class="question" style="display: none;">
   <p>2. Какие виды <strong>видеопамяти</strong> в видеокарте </p>
   <label><input type="radio" name="q2" value="wrong2" > DDR2 DDR </label><br>
   <label><input type="radio" name="q2" value="correct" > GDDR6X GDDR5 </label><br>
   <label><input type="radio" name="q2" value="wrong1">  У видеокарты нет видеопамяти </label>
 </div>
-    <div class="question">
+    <div id="question3" class="question" style="display: none;">
   <p>3. Что такое <strong>SSD</strong> в компьютере </p>
   <label><input type="radio" name="q3" value="correct" > Это устройство хранения данных </label><br>
   <label><input type="radio" name="q3" value="wrong2" > Это устройство выводящее видеокартинку </label><br>
   <label><input type="radio" name="q3" value="wrong1">  Это устройство которое отвечает за подсветку </label>
   <label><input type="radio" name="q3" value="wrong3">  Это устройство которое отвечает за локальные сети </label>
 </div>
-     <div class="question">
+     <div id="question4" class="question" style="display: none;">
   <p>4. Что такое <strong>ОЗУ</strong> в компьютере </p>
   <label><input type="radio" name="q4" value="correct" > Это устройство которое временно хранит память </label><br>
   <label><input type="radio" name="q4" value="wrong2" > Это устройство что регулирует скорость кулеров </label><br>
   <label><input type="radio" name="q4" value="wrong1">  Это устройство которое отвечает за питание компьютера </label>
 </div>
-     <div class="question">
+     <div id="question5" class="question" style="display: none;">
   <p>5. Что такое <strong>БП</strong> в компьютере </p>
   <label><input type="radio" name="q5" value="wrong2" > Это устройство которое выводит звук </label><br>
   <label><input type="radio" name="q5" value="wrong1" > Это устройство выводящее видеокартинку </label><br>
   <label><input type="radio" name="q5" value="correct">  Это устройство которое отвечает за питание устройств компьютера </label>
 </div>
+      <div id="feedback" style="margin-top: 15px;"></div>
     <button onclick="checkQuiz()">Узнать результат</button>
 <div class="result" id="result"></div>
-
 <script>
+  let score = 0
+  let currentquestion = 1; 
   // ЭТО ДЛЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
   const startScreen = document.getElementById('startScreen');
   const quizContainer = document.getElementById('quiz-container');
   const startBtn = document.getElementById('start-btn');
   //ДАЛЕЕ ЕСЛИ НАЖИМАЕМ НА КНОПКУ 
   startBtn.addEventListener('click',function() {
-    startScreen.style.display = 'none'; // строчка для того чтобы убрать приветсвтие 
+    startScreen.style.display = 'none'; // строчка для того чтобы убрать приветствие
     quizContainer.style.display = 'block';
   });
     function checkQuiz() {
-      let score = 0;
-      let q1 = document.querySelector('input[name="q1"]:checked');
-      if (q1 && q1.value === "correct") score++;
-      let q2 = document.querySelector('input[name="q2"]:checked');
-        if (q2 && q2.value === "correct") score++;
-      let q3 = document.querySelector('input[name="q3"]:checked');
-        if (q3 && q3.value === "correct") score++;
-      let q4 = document.querySelector('input[name="q4"]:checked');
-        if (q4 && q4.value === "correct") score++;
-      let q5 = document.querySelector('input[name="q5"]:checked');
-        if (q5 && q5.value === "correct") score++;
-
-        document.getElementById('result').innerHTML = "<h2>Твой результат: " + score + " из 5</h2>";
-  
+let currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
+    
+    if (currentInput && currentInput.value === "correct") {
+        score++;
+    }
+currentquestion++;
+      document.getElementById('question-counter').innerHTML = `Вопрос ${currentquestion} из 5`;
+      if (currentquestion <= 5) {
+         document.getElementById(`question${currentquestion - 1}`).style.display = 'none';
+        document.getElementById(`question${currentquestion}`).style.display = 'block';
+    } else {
+         document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
+        // Скрываем кнопку
+        document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
+    }
+    
+    // Очищаем обратную связь (если была)
+    const feedbackDiv = document.getElementById('feedback');
+    if (feedbackDiv) {
+        feedbackDiv.innerHTML = '';
+    }
 }
 </script>
 </body>
