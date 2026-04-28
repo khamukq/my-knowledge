@@ -38,7 +38,13 @@
     <title> Викторина основанная на железе компа </title>
   </head>
   <body>
-    <h1> Тест: мои знания в компах </h1>
+    <div id = "startScreen">
+    <h2> Проверь же свой мегамозг на знания</h2>
+      <p> Всего 5 легких вопросов </p>
+      <button id="start-btn">Начать викторину</button>
+    </div>
+    <div id="quiz-container" style="display: none;">
+          <h1> Тест: мои знания в компах </h1>
 <div class="question">
   <p>1. Что такое <strong>кэш</strong> в процессоре </p>
   <label><input type="radio" name="q1" value="wrong2" > Это ядра процессора </label><br>
@@ -73,8 +79,16 @@
     <button onclick="checkQuiz()">Узнать результат</button>
 <div class="result" id="result"></div>
 
-
 <script>
+  // ЭТО ДЛЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
+  const startScreen = document.getElementById('startScreen');
+  const quizContainer = document.getElementById('quiz-container');
+  const startBtn = document.getElementById('start-btn');
+  //ДАЛЕЕ ЕСЛИ НАЖИМАЕМ НА КНОПКУ 
+  startBtn.addEventListener('click',function() {
+    startScreen.style.display = 'none'; // строчка для того чтобы убрать приветсвтие 
+    quizContainer.style.display = 'block';
+  });
     function checkQuiz() {
       let score = 0;
       let q1 = document.querySelector('input[name="q1"]:checked');
