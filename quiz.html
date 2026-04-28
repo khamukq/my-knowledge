@@ -138,6 +138,11 @@
     }
 }
 function checkQuiz() {
+    // Блокируем кнопку, чтобы нельзя было нажать повторно
+    const quizButton = document.querySelector('button[onclick="checkQuiz()"]');
+    quizButton.disabled = true;
+    quizButton.style.opacity = '0.5';
+    
     let currentInput = document.querySelector(`input[name="q${currentquestion}"]:checked`);
     
     if (currentInput) {
@@ -161,6 +166,9 @@ function checkQuiz() {
                 if (feedbackDiv) {
                     feedbackDiv.innerHTML = '';
                 }
+                // Разблокируем кнопку для следующего вопроса
+                quizButton.disabled = false;
+                quizButton.style.opacity = '1';
             } else {
                 document.getElementById('result').innerHTML = `<h2>Твой результат: ${score} из 5</h2>`;
                 document.querySelector('button[onclick="checkQuiz()"]').style.display = 'none';
@@ -178,6 +186,9 @@ function checkQuiz() {
         feedbackDiv.style.backgroundColor = '#fff3cd';
         feedbackDiv.style.padding = '10px';
         feedbackDiv.style.borderRadius = '5px';
+        // Разблокируем кнопку, чтобы можно было выбрать ответ и нажать снова
+        quizButton.disabled = false;
+        quizButton.style.opacity = '1';
     }
 }
   function restartQuiz() {
